@@ -98,8 +98,8 @@ public class Magic {
             if ("int".equals(s))     return int.class;
             if ("long".equals(s))    return long.class;
             if ("float".equals(s))   return float.class;
-            if ("double".equals(s)) return double.class;
-            if ("String".equals(s)) return String.class;
+            if ("double".equals(s))  return double.class;
+            if ("String".equals(s))  return String.class;
         }
 
         // Automagically convert primitive type names.
@@ -111,7 +111,8 @@ public class Magic {
         if ("int".equals(s))     { s = "I"; } else
         if ("long".equals(s))    { s = "J"; } else
         if ("float".equals(s))   { s = "F"; } else
-        if ("double".equals(s))  { s = "D"; }
+        if ("double".equals(s))  { s = "D"; } else
+        if ("String".equals(s))  { s = "Ljava.lang.String";}
 
         while (--brackets >= 0) s = '[' + s;
         try {
