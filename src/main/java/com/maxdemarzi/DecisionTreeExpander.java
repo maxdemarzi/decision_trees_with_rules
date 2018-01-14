@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class DecisionTreeExpander implements PathExpander {
     private Map<String, Object> facts;
-    ExpressionEvaluator ee = new ExpressionEvaluator();
+    private ExpressionEvaluator ee = new ExpressionEvaluator();
 
     public DecisionTreeExpander(Map<String, Object> facts) {
         this.facts = facts;
@@ -48,16 +48,21 @@ public class DecisionTreeExpander implements PathExpander {
     }
 
     private boolean isTrue(Node rule) throws Exception {
-
+            // Get the properties of the rule stored in the node
             Map<String, Object> ruleProperties = rule.getAllProperties();
             String[] parameterNames = Magic.explode((String) ruleProperties.get("parameter_names"));
             Class<?>[] parameterTypes = Magic.stringToTypes((String) ruleProperties.get("parameter_types"));
+
+            // Fill the arguments array with their corresponding values
             Object[] arguments = new Object[parameterNames.length];
             for (int j = 0; j < parameterNames.length; ++j) {
                 arguments[j] = Magic.createObject(parameterTypes[j], (String) facts.get(parameterNames[j]));
             }
 
+            // Set our parameters with their matching types
             ee.setParameters(parameterNames, parameterTypes);
+
+            // And now we "cook" (scan, parse, compile and load) the expression.
             ee.cook((String)ruleProperties.get("expression"));
 
             return (boolean) ee.evaluate(arguments);
