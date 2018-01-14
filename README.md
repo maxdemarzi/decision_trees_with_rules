@@ -11,7 +11,7 @@ project, simply package the project with maven:
 
     mvn clean package
 
-This will produce a jar-file, `target/matcher-1.0-SNAPSHOT.jar`,
+This will produce a jar-file, `target/decision_trees_with_rules-1.0-SNAPSHOT.jar`,
 that can be copied to the `plugin` directory of your Neo4j instance.
 
     cp target/decision_trees_with_rules-1.0-SNAPSHOT.jar neo4j-enterprise-3.3.1/plugins/.
