@@ -23,7 +23,7 @@ public class DecisionTreeTraverserTest {
             .withProcedure(DecisionTreeTraverser.class);
 
     @Test
-    public void testMatcher() throws Exception {
+    public void testTraversal() throws Exception {
         HTTP.Response response = HTTP.POST(neo4j.httpURI().resolve("/db/data/transaction/commit").toString(), QUERY1);
         int count = response.get("results").get(0).get("data").size();
         assertEquals(1, count);
@@ -36,7 +36,7 @@ public class DecisionTreeTraverserTest {
                     "CALL com.maxdemarzi.traverse.decision_tree('bar entrance', {gender:'male', age:'20'}) yield path return path")));
 
     @Test
-    public void testMatcherTwo() throws Exception {
+    public void testTraversalTwo() throws Exception {
         HTTP.Response response = HTTP.POST(neo4j.httpURI().resolve("/db/data/transaction/commit").toString(), QUERY2);
         int count = response.get("results").get(0).get("data").size();
         assertEquals(1, count);
@@ -49,7 +49,7 @@ public class DecisionTreeTraverserTest {
                     "CALL com.maxdemarzi.traverse.decision_tree('bar entrance', {gender:'female', age:'19'}) yield path return path")));
 
     @Test
-    public void testMatcherThree() throws Exception {
+    public void testTraversalThree() throws Exception {
         HTTP.Response response = HTTP.POST(neo4j.httpURI().resolve("/db/data/transaction/commit").toString(), QUERY3);
         int count = response.get("results").get(0).get("data").size();
         assertEquals(1, count);
