@@ -31,7 +31,7 @@ public class DecisionTreeTraverser {
         // Which Decision Tree are we interested in?
         Node tree = db.findNode(Labels.Tree, "id", id);
         if ( tree != null) {
-            // Find the paths by traversing this graph and the patientObservations
+            // Find the paths by traversing this graph and the facts given
             return decisionPath(tree, facts);
         }
         return null;

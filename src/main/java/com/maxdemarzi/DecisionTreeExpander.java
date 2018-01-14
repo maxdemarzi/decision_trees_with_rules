@@ -43,8 +43,8 @@ public class DecisionTreeExpander implements PathExpander {
             }
         }
 
-        // Otherwise, got to the next node in the tree.
-        return path.endNode().getRelationships(Direction.OUTGOING, RelationshipTypes.NEXT);
+        // Otherwise, not sure what to do really.
+        return Collections.emptyList();
     }
 
     private boolean isTrue(Node rule) throws Exception {
