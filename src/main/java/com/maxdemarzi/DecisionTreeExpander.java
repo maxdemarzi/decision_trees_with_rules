@@ -10,10 +10,10 @@ import java.util.Collections;
 import java.util.Map;
 
 public class DecisionTreeExpander implements PathExpander {
-    private Map<String, Object> facts;
+    private Map<String, String> facts;
     private ExpressionEvaluator ee = new ExpressionEvaluator();
 
-    public DecisionTreeExpander(Map<String, Object> facts) {
+    public DecisionTreeExpander(Map<String, String> facts) {
         this.facts = facts;
         ee.setExpressionType(boolean.class);
     }
@@ -56,7 +56,7 @@ public class DecisionTreeExpander implements PathExpander {
             // Fill the arguments array with their corresponding values
             Object[] arguments = new Object[parameterNames.length];
             for (int j = 0; j < parameterNames.length; ++j) {
-                arguments[j] = Magic.createObject(parameterTypes[j], (String) facts.get(parameterNames[j]));
+                arguments[j] = Magic.createObject(parameterTypes[j], facts.get(parameterNames[j]));
             }
 
             // Set our parameters with their matching types
