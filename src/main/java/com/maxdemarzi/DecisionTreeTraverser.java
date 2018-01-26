@@ -45,4 +45,25 @@ public class DecisionTreeTraverser {
 
         return myTraversal.traverse(tree).stream().map(PathResult::new);
     }
+
+    @Procedure(name = "com.maxdemarzi.traverse.decision_tree_two", mode = Mode.READ)
+    @Description("CALL com.maxdemarzi.traverse.decision_tree_two(tree, facts) - traverse decision tree")
+    public Stream<PathResult> traverseDecisionTreeTwo(@Name("tree") String id, @Name("facts") Map<String, String> facts) throws IOException {
+        // Which Decision Tree are we interested in?
+        Node tree = db.findNode(Labels.Tree, "id", id);
+        if ( tree != null) {
+            // Find the paths by traversing this graph and the facts given
+            return decisionPathTwo(tree, facts);
+        }
+        return null;
+    }
+
+    private Stream<PathResult> decisionPathTwo(Node tree, Map<String, String> facts) {
+        TraversalDescription myTraversal = db.traversalDescription()
+                .depthFirst()
+                .expand(new DecisionTreeExpanderTwo(facts))
+                .evaluator(decisionTreeEvaluator);
+
+        return myTraversal.traverse(tree).stream().map(PathResult::new);
+    }
 }

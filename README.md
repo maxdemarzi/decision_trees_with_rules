@@ -51,3 +51,38 @@ Try it:
     CALL com.maxdemarzi.traverse.decision_tree('bar entrance', {gender:'male', age:'20'}) yield path return path;
     CALL com.maxdemarzi.traverse.decision_tree('bar entrance', {gender:'female', age:'19'}) yield path return path;
     CALL com.maxdemarzi.traverse.decision_tree('bar entrance', {gender:'male', age:'23'}) yield path return path;     
+    
+    
+Evaluating Scripts instead of expressions.
+
+Create some test data:
+
+    CREATE (tree:Tree { id: 'funeral' })
+    CREATE (good_man_rule:Rule { parameter_names: 'answer_1', parameter_types:'String', expression:'switch (answer_1) { case \"yeah\": return \"OPTION_1\"; case \"what\": return \"OPTION_2\"; case \"okay\": return \"OPTION_3\"; default: return \"UNKNOWN\"; }' })
+    CREATE (good_man_two_rule:Rule { parameter_names: 'answer_2', parameter_types:'String', expression:'switch (answer_2) { case \"yeah\": return \"OPTION_1\"; case \"what\": return \"OPTION_2\"; case \"okay\": return \"OPTION_3\"; default: return \"UNKNOWN\"; }' })
+    CREATE (rest_in_peace_rule:Rule { parameter_names: 'answer_3', parameter_types:'String', expression:'switch (answer_3) { case \"yeah\": return \"OPTION_1\"; case \"what\": return \"OPTION_2\"; case \"okay\": return \"OPTION_3\"; default: return \"UNKNOWN\"; } ' })
+    CREATE (answer_correct:Answer { id: 'correct'})
+    CREATE (answer_incorrect:Answer { id: 'incorrect'})
+    CREATE (answer_unknown:Answer { id: 'unknown'})
+    CREATE (tree)-[:HAS]->(good_man_rule)
+    CREATE (good_man_rule)-[:OPTION_1]->(answer_incorrect)
+    CREATE (good_man_rule)-[:OPTION_2]->(good_man_two_rule)
+    CREATE (good_man_rule)-[:OPTION_3]->(answer_incorrect)
+    CREATE (good_man_rule)-[:UNKNOWN]->(answer_unknown)
+    
+    CREATE (good_man_two_rule)-[:OPTION_1]->(rest_in_peace_rule)
+    CREATE (good_man_two_rule)-[:OPTION_2]->(answer_incorrect)
+    CREATE (good_man_two_rule)-[:OPTION_3]->(answer_incorrect)
+    CREATE (good_man_two_rule)-[:UNKNOWN]->(answer_unknown)
+    
+    CREATE (rest_in_peace_rule)-[:OPTION_1]->(answer_incorrect)
+    CREATE (rest_in_peace_rule)-[:OPTION_2]->(answer_incorrect)
+    CREATE (rest_in_peace_rule)-[:OPTION_3]->(answer_correct)
+    CREATE (rest_in_peace_rule)-[:UNKNOWN]->(answer_unknown);    
+    
+Try it:
+
+
+CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'yeah', answer_2:'yeah', answer_3:'yeah'}) yield path return path
+CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'what', answer_2:'', answer_3:''}) yield path return path
+CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'what', answer_2:'yeah', answer_3:'okay'}) yield path return path    
