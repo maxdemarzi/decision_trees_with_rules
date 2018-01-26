@@ -58,8 +58,8 @@ public class DecisionTreeExpanderTwo implements PathExpander {
         // Set our parameters with their matching types
         se.setParameters(parameterNames, parameterTypes);
 
-        // And now we "cook" (scan, parse, compile and load) the expression.
-        se.cook((String)ruleProperties.get("expression"));
+        // And now we "cook" (scan, parse, compile and load) the script.
+        se.cook((String)ruleProperties.get("script"));
 
         return RelationshipType.withName((String) se.evaluate(arguments));
     }
