@@ -84,6 +84,6 @@ Create some test data:
 Try it:
 
 
-CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'yeah', answer_2:'yeah', answer_3:'yeah'}) yield path return path
-CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'what', answer_2:'', answer_3:''}) yield path return path
-CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'what', answer_2:'yeah', answer_3:'okay'}) yield path return path    
+    CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'yeah', answer_2:'yeah', answer_3:'yeah'}) yield path return path    
+    CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'what', answer_2:'', answer_3:''}) yield path return path    
+    CALL com.maxdemarzi.traverse.decision_tree_two('funeral', {answer_1:'what', answer_2:'yeah', answer_3:'okay'}) yield path return path    
