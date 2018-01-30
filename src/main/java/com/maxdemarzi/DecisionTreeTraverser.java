@@ -61,7 +61,7 @@ public class DecisionTreeTraverser {
     private Stream<PathResult> decisionPathTwo(Node tree, Map<String, String> facts) {
         TraversalDescription myTraversal = db.traversalDescription()
                 .depthFirst()
-                .expand(new DecisionTreeExpanderTwo(facts))
+                .expand(new DecisionTreeExpanderTwo(facts, log))
                 .evaluator(decisionTreeEvaluator);
 
         return myTraversal.traverse(tree).stream().map(PathResult::new);

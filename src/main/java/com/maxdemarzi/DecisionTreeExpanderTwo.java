@@ -5,16 +5,19 @@ import com.maxdemarzi.schema.RelationshipTypes;
 import org.codehaus.janino.ScriptEvaluator;
 import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.traversal.BranchState;
+import org.neo4j.logging.Log;
 
 import java.util.Collections;
 import java.util.Map;
 
 public class DecisionTreeExpanderTwo implements PathExpander {
     private Map<String, String> facts;
+    private Log log;
     ScriptEvaluator se = new ScriptEvaluator();
 
-    public DecisionTreeExpanderTwo(Map<String, String> facts) {
+    public DecisionTreeExpanderTwo(Map<String, String> facts, Log log) {
         this.facts = facts;
+        this.log = log;
         se.setReturnType(String.class);
     }
 
@@ -34,6 +37,8 @@ public class DecisionTreeExpanderTwo implements PathExpander {
             try {
                 return path.endNode().getRelationships(Direction.OUTGOING, choosePath(path.endNode()));
             } catch (Exception e) {
+
+                log.debug("Decision Tree Traversal failed", e);
                 // Could not continue this way!
                 return Collections.emptyList();
             }
